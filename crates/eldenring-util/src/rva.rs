@@ -54,6 +54,8 @@ pub fn get() -> &'static RvaBundle {
                     rva_ww::RVA_CS_ACTION_BUTTON_MAN_EXECUTE_ACTION_BUTTON,
                 cs_menu_man_imp_display_status_message:
                     rva_ww::RVA_CS_MENU_MAN_DISPLAY_STATUS_MESSAGE,
+                gaitem_lookup_result_get_gaitem_ins_by_category: rva_ww::RVA_GAITEM_LOOKUP_RESULT_GET_GAITEM_INS_BY_CATEGORY,
+                gaitem_get_swordarts_param_id_for_weapon: rva_ww::RVA_GAITEM_LOOKUP_RESULT_GET_SWORDARTS_PARAM_ID_FOR_WEAPON
             },
             ("ELDEN RING", LANG_ID_JP, "2.6.1.1") => RvaBundle {
                 cs_ez_draw_draw_line: rva_jp::RVA_CS_EZ_DRAW_DRAW_LINE,
@@ -71,6 +73,8 @@ pub fn get() -> &'static RvaBundle {
                     rva_jp::RVA_CS_ACTION_BUTTON_MAN_EXECUTE_ACTION_BUTTON,
                 cs_menu_man_imp_display_status_message:
                     rva_jp::RVA_CS_MENU_MAN_DISPLAY_STATUS_MESSAGE,
+                gaitem_lookup_result_get_gaitem_ins_by_category: rva_jp::RVA_GAITEM_LOOKUP_RESULT_GET_GAITEM_INS_BY_CATEGORY,
+                gaitem_get_swordarts_param_id_for_weapon: rva_jp::RVA_GAITEM_LOOKUP_RESULT_GET_SWORDARTS_PARAM_ID_FOR_WEAPON
             },
             _ => panic!(
                 "could not fetch RVAs for executable. name = \"{product}\", lang = {lang_id_base:x}, version = {version}"
@@ -95,4 +99,6 @@ pub struct RvaBundle {
     pub chr_ins_remove_speffect: u32,
     pub cs_action_button_man_execute_action_button: u32,
     pub cs_menu_man_imp_display_status_message: u32,
+    pub gaitem_lookup_result_get_gaitem_ins_by_category: u32,
+    pub gaitem_get_swordarts_param_id_for_weapon: u32
 }

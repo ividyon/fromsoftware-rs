@@ -1,4 +1,8 @@
-use eldenring::cs::{CSGaitemImp, CSGaitemIns, GaitemHandle};
+use std::intrinsics::transmute;
+use eldenring::cs::{CSGaitemImp, CSGaitemIns, ChrIns, GaitemHandle, GaitemLookupResult, ItemCategory, SwordArtsParamLookupResult};
+use pelite::pe64::Pe;
+use crate::program::Program;
+use crate::rva;
 
 pub trait CSGaitemImpExt {
     fn gaitem_ins_by_handle(&self, handle: &GaitemHandle) -> Option<&CSGaitemIns>;
@@ -33,5 +37,31 @@ impl CSGaitemImpExt for CSGaitemImp {
         }
 
         Some(self.gaitems[index].as_mut()?.as_mut())
+    }
+}
+
+pub trait GaitemLookupResultExt {
+    fn get_gaitem_ins_by_category(&self, handle: *const GaitemHandle, item_category: ItemCategory) -> Option<&CSGaitemIns>;
+
+    fn get_sword_arts_param_id_for_weapon(&mut self) -> Option<i32>;
+}
+
+impl GaitemLookupResultExt for GaitemLookupResult {
+    fn get_gaitem_ins_by_category(&self, handle: *const GaitemHandle, item_category: ItemCategory) -> Option<&CSGaitemIns> {
+        let rva = Program::current()
+            .rva_to_va(rva::get().gaitem_lookup_result_get_gaitem_ins_by_category)
+            .unwrap();
+
+        let call = unsafe { transmute::<u64, fn(&GaitemLookupResult, *const GaitemHandle, ItemCategory) -> Option<&CSGaitemIns>>(rva) };
+        call(self, handle, item_category)
+    }
+
+    fn get_sword_arts_param_id_for_weapon(&mut self) -> Option<i32> {
+        let rva = Program::current()
+            .rva_to_va(rva::get().gaitem_get_swordarts_param_id_for_weapon)
+            .unwrap();
+
+        let call = unsafe { transmute::<u64, fn(&GaitemLookupResult) -> Option<i32>>(rva) };
+        call(self)
     }
 }

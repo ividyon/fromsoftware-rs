@@ -4,6 +4,7 @@ use thiserror::Error;
 
 use crate::cs::ItemId;
 use shared::OwnedPtr;
+use crate::param::EQUIP_PARAM_GOODS_ST;
 
 #[repr(C)]
 #[shared::singleton("CSGaitem")]
@@ -193,6 +194,21 @@ pub struct CSGemGaitemIns {
     /// Handle of the weapon this gem is attached to
     pub weapon_handle: GaitemHandle,
     // _pad14: [u8; 0x4],
+}
+
+#[repr(C)]
+pub struct GaitemLookupResult {
+    pub gaitem_handle: GaitemHandle,
+    unk: i32,
+    pub gaitem_ins: CSGaitemIns,
+    pub item_id: i32,
+}
+
+#[repr(C)]
+pub struct EquipParamGoodsLookupResult {
+    pub param_id: i32,
+    unk: i32,
+    pub param_row: Option<NonNull<EQUIP_PARAM_GOODS_ST>>,
 }
 
 #[cfg(test)]

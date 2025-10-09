@@ -13,3 +13,4 @@ pub mod task;
 pub mod world_chr_man;
 
 pub(crate) mod rva;
+pub mod chr_asm;

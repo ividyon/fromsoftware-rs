@@ -1,6 +1,4 @@
 use bitfield::bitfield;
-use std::ffi;
-use std::ops::Index;
 use std::ptr::NonNull;
 use std::slice::SliceIndex;
 use vtable_rs::VPtr;
@@ -317,11 +315,26 @@ pub struct ChrInsModuleContainer {
     pub wet: OwnedPtr<CSChrWetModule>,
     auto_homing: usize,
     above_shadow_test: usize,
-    sword_arts: usize,
+    sword_arts: OwnedPtr<CSChrSwordArtsModule>,
     grass_hit: usize,
     wheel_rot: usize,
     cliff_wind: usize,
     navimesh_cost_effect: usize,
+}
+
+#[repr(C)]
+/// Source of name: RTTI
+pub struct CSChrSwordArtsModule {
+    vftable: usize,
+    pub owner: NonNull<ChrIns>,
+    pub modifiers: Vector<CSChrModelParamModifierModuleEntry>,
+}
+
+#[repr(C)]
+pub struct SwordArtsParamLookupResult {
+    pub param_id: i32,
+    _pad: [u8; 4],
+    pub param_row: Option<NonNull<SWORD_ARTS_PARAM_ST>>,
 }
 
 #[repr(C)]
@@ -1174,7 +1187,8 @@ pub struct ChrCtrl {
     hover_warp_ctrl: usize,
     ai_jump_move_ctrl: usize,
     chr_model_pos_easing: usize,
-    unke8: [u8; 0x8],
+    pub unk_bitfield: ChrCtrlUnkBitfield,
+    unke9: [u8; 0x7],
     pub flags: ChrCtrlFlags,
     pub flags_copy: ChrCtrlFlags,
     unkf8: u32,
@@ -1276,6 +1290,14 @@ pub struct ChrCtrl {
     unk3ab: [u8; 0x5],
     unk3b0: usize,
     unk3b8: [u8; 0x18],
+}
+
+bitfield! {
+    #[derive(Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct ChrCtrlUnkBitfield(u8);
+    impl Debug;
+    /// As described in Pav's table. Prevents inputs from reaching the player
+    pub enable_control, set_enable_control: 5;
 }
 
 #[repr(C)]

@@ -1,4 +1,4 @@
-﻿use eldenring::cs::{ChrAsm, ChrAsmSlot, ChrIns, GaitemHandle};
+﻿use eldenring::cs::{ChrAsm, ChrAsmSlot, GaitemHandle};
 use thiserror::Error;
 
 #[derive(Debug, Error)]

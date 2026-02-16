@@ -7,7 +7,7 @@ use windows::core::PCWSTR;
 use crate::cs::BlockId;
 use crate::dltx::DLString;
 use crate::fd4::FD4Time;
-use crate::param::ATK_PARAM_ST;
+use crate::param::{ATK_PARAM_ST, SWORD_ARTS_PARAM_ST};
 use crate::position::{BlockPosition, HavokPosition};
 use crate::rotation::Quaternion;
 use crate::Vector;

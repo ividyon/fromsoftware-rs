@@ -1,10 +1,10 @@
 use std::{fmt::Display, mem::transmute};
-
+use std::ptr::NonNull;
 use thiserror::Error;
 
 use crate::cs::ItemId;
 use shared::OwnedPtr;
-use crate::param::EQUIP_PARAM_GOODS_ST;
+use crate::param::{EQUIP_PARAM_GEM_ST, EQUIP_PARAM_GOODS_ST, EQUIP_PARAM_WEAPON_ST};
 
 #[repr(C)]
 #[shared::singleton("CSGaitem")]
@@ -209,6 +209,18 @@ pub struct EquipParamGoodsLookupResult {
     pub param_id: i32,
     unk: i32,
     pub param_row: Option<NonNull<EQUIP_PARAM_GOODS_ST>>,
+}
+#[repr(C)]
+pub struct EquipParamWeaponLookupResult {
+    pub param_id: i32,
+    unk: i32,
+    pub param_row: Option<NonNull<EQUIP_PARAM_WEAPON_ST>>,
+}
+#[repr(C)]
+pub struct EquipParamGemLookupResult {
+    pub param_id: i32,
+    unk: i32,
+    pub param_row: Option<NonNull<EQUIP_PARAM_GEM_ST>>,
 }
 
 #[cfg(test)]

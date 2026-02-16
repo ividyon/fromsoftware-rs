@@ -1,7 +1,7 @@
-use std::intrinsics::transmute;
-use eldenring::cs::{CSGaitemImp, CSGaitemIns, ChrIns, GaitemHandle, GaitemLookupResult, ItemCategory, SwordArtsParamLookupResult};
+use std::mem::transmute;
+use eldenring::cs::{CSGaitemImp, CSGaitemIns, GaitemHandle, GaitemLookupResult, ItemCategory};
 use pelite::pe64::Pe;
-use crate::program::Program;
+use shared::Program;
 use crate::rva;
 
 pub trait CSGaitemImpExt {

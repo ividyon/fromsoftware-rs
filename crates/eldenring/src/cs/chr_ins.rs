@@ -578,10 +578,7 @@ pub struct ChrCtrl {
     hover_warp_ctrl: usize,
     ai_jump_move_ctrl: usize,
     chr_model_pos_easing: usize,
-    unke8: u8,
-    /// Disables side to side movement and rotation of the character,
-    /// allowing only forward movement.
-    /// Set when character is on the ladder.
+    pub unk_bitfield: ChrCtrlUnkBitfield,
     pub disable_move: bool,
     unkea: [u8; 0x6],
     pub flags: ChrCtrlFlags,
@@ -685,6 +682,14 @@ pub struct ChrCtrl {
     unk3ab: [u8; 0x5],
     unk3b0: usize,
     unk3b8: [u8; 0x18],
+}
+
+bitfield! {
+    #[derive(Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct ChrCtrlUnkBitfield(u8);
+    impl Debug;
+    /// As described in Pav's table. Prevents inputs from reaching the player
+    pub enable_control, set_enable_control: 5;
 }
 
 #[repr(C)]

@@ -141,7 +141,10 @@ pub struct CSSessionManager {
     pub aes_encrypter: OwnedPtr<AESEncrypter>,
     pub aes_decrypter: OwnedPtr<AESDecrypter>,
     unk250: u32,
-    unk254: u32,
+    pub unk254: bool,
+    unk255: bool,
+    unk256: bool,
+    unk257: bool,
     unk258: u32,
     /// This field is set to 1 on init and never changed.
     /// If it's not 1, all sessions will use this value instead of the default session player limit.

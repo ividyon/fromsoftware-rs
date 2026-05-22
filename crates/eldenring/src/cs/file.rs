@@ -48,7 +48,7 @@ pub trait CSFileImpVmt {
 /// Manages files used by the file, both virtual and on-disk.
 #[repr(C)]
 pub struct CSFileImp {
-    vftable: VPtr<dyn CSFileImpVmt, Self>,
+    pub vftable: VPtr<dyn CSFileImpVmt, Self>,
     pub file_repository_1: OwnedPtr<CSFileRepository>,
     // TODO: Incomplete..
 }

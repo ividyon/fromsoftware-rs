@@ -215,6 +215,18 @@ pub struct PlayerGameData {
     unkab4: [u8; 0x34],
 }
 
+impl PlayerGameData {
+    /// Returns the player's name.
+    pub fn get_character_name(&self) -> String {
+        let length = self
+            .character_name
+            .iter()
+            .position(|c| *c == 0)
+            .unwrap_or(self.character_name.len());
+        String::from_utf16(&self.character_name[..length]).unwrap()
+    }
+}
+
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum SellRegion {
@@ -902,7 +914,7 @@ impl ChrAsm {
             .expect(&*ChrAsmError::InvalidIndex.to_string())
     }
     pub fn get_selected_left_weapon(&self) -> GaitemHandle {
-        self.get_right_weapon_by_slot(self.equipment.selected_slots.left_weapon_slot)
+        self.get_left_weapon_by_slot(self.equipment.selected_slots.left_weapon_slot)
             .expect(&*ChrAsmError::InvalidIndex.to_string())
     }
     pub fn get_selected_right_arrow(&self) -> GaitemHandle {
@@ -914,11 +926,11 @@ impl ChrAsm {
             .expect(&*ChrAsmError::InvalidIndex.to_string())
     }
     pub fn get_selected_right_bolt(&self) -> GaitemHandle {
-        self.get_arrow_by_slot(self.equipment.selected_slots.right_bolt_slot)
+        self.get_bolt_by_slot(self.equipment.selected_slots.right_bolt_slot)
             .expect(&*ChrAsmError::InvalidIndex.to_string())
     }
     pub fn get_selected_left_bolt(&self) -> GaitemHandle {
-        self.get_arrow_by_slot(self.equipment.selected_slots.left_bolt_slot)
+        self.get_bolt_by_slot(self.equipment.selected_slots.left_bolt_slot)
             .expect(&*ChrAsmError::InvalidIndex.to_string())
     }
     pub fn get_right_weapon_by_slot(&self, slot: u32) -> Result<GaitemHandle, ChrAsmError> {

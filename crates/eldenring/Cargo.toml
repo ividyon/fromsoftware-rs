@@ -19,6 +19,7 @@ bitflags.workspace = true
 encoding_rs.workspace = true
 cxx-stl.workspace = true
 num_enum.workspace = true
+log = "0.4.29"
 
 [package.metadata.docs.rs]
 default-target = "x86_64-pc-windows-msvc"

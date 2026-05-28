@@ -9,22 +9,23 @@ mod rva_ww;
 
 pub use bundle::RvaBundle;
 
-const NAME: &str = "ELDEN RING™";
+const NAME_EN: &str = "ELDEN RING™";
+const NAME_JP: &str = "ELDEN RING";
 
 const LANG_ID_EN: u16 = 0x0009;
 const LANG_ID_JP: u16 = 0x0011;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum GameVersion {
-    Ww261,
-    Jp2611,
+    Ww262,
+    Jp2621,
 }
 
 impl GameVersion {
     fn from_metadata(product: &str, lang_id: u16, version: &str) -> Option<Self> {
         match (product, lang_id, version) {
-            (NAME, LANG_ID_EN, "2.6.1.0") => Some(Self::Ww261),
-            (NAME, LANG_ID_JP, "2.6.1.1") => Some(Self::Jp2611),
+            (NAME, LANG_ID_EN, "2.6.2.0") => Some(Self::Ww262),
+            (NAME, LANG_ID_JP, "2.6.2.1") => Some(Self::Jp2621),
             _ => None,
         }
     }
@@ -72,19 +73,25 @@ fn detect_version_and_get_rvas(module: &PeView) -> RvaBundle {
         }
     });
 
-    let product = product_name.expect("Executable doesn't contain product name metadata");
-    if product != NAME {
-        panic!(
-            "Expected executable name to be \"{}\", was \"{}\"",
-            NAME, &product
-        );
-    }
-
     let lang_id_base = language.lang_id & 0x03FF;
     if lang_id_base != LANG_ID_EN && lang_id_base != LANG_ID_JP {
         panic!(
             "Expected executable language ID to be {:#04x} or {:#04x}, was {:#04x}",
             LANG_ID_EN, LANG_ID_JP, lang_id_base
+        );
+    }
+
+    let product = product_name.expect("Executable doesn't contain product name metadata");
+
+    if lang_id_base == LANG_ID_EN && product != NAME_EN {
+        panic!(
+            "Expected executable name to be \"{}\", was \"{}\"",
+            NAME_EN, &product
+        );
+    } else if lang_id_base == LANG_ID_JP && product != NAME_JP {
+        panic!(
+            "Expected executable name to be \"{}\", was \"{}\"",
+            NAME_JP, &product
         );
     }
 
@@ -97,8 +104,8 @@ fn detect_version_and_get_rvas(module: &PeView) -> RvaBundle {
 impl RvaBundle {
     fn for_version(version: GameVersion) -> Self {
         match version {
-            GameVersion::Ww261 => rva_ww::RVAS,
-            GameVersion::Jp2611 => rva_jp::RVAS,
+            GameVersion::Ww262 => rva_ww::RVAS,
+            GameVersion::Jp2621 => rva_jp::RVAS,
         }
     }
 }

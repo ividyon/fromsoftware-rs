@@ -64,7 +64,7 @@ pub struct StatScaling {
     pub intelligence: f32,
     pub faith: f32,
     pub strength: f32,
-    pub dexterity: f32
+    pub dexterity: f32,
 }
 
 #[repr(C)]

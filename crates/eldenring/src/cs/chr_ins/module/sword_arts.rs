@@ -1,7 +1,7 @@
-﻿use std::ptr::NonNull;
+use crate::Vector;
 use crate::cs::{CSChrModelParamModifierModuleEntry, ChrIns};
 use crate::param::SWORD_ARTS_PARAM_ST;
-use crate::Vector;
+use std::ptr::NonNull;
 
 #[repr(C)]
 /// Source of name: RTTI

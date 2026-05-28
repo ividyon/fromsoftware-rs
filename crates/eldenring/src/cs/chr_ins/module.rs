@@ -14,11 +14,11 @@ mod model_param_modifier;
 mod physics;
 mod ride;
 mod super_armor;
+mod sword_arts;
 mod throw;
 mod time_act;
 mod toughness;
 mod wet;
-mod sword_arts;
 
 pub use action_flag::*;
 pub use action_request::*;

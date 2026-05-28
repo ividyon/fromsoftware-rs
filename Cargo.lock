@@ -456,6 +456,7 @@ dependencies = [
  "encoding_rs",
  "fromsoftware-shared 0.13.0",
  "glam",
+ "log",
  "num_enum",
  "pelite",
  "thiserror 1.0.69",

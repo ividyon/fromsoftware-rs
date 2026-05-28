@@ -1,14 +1,18 @@
+use bitfield::bitfield;
+use pelite::pe64::Pe;
 use std::fmt::Display;
 use std::mem::transmute;
 use std::ptr::NonNull;
-use bitfield::bitfield;
-use pelite::pe64::Pe;
 use thiserror::Error;
 
-use crate::{cs::{CSRandXorshift, OptionalItemId}, dlut::DLFixedVector, rva};
-use shared::{OwnedPtr, Program, Subclass, Superclass};
 use crate::cs::ItemCategory;
-use crate::param::{EquipParam, EQUIP_PARAM_GEM_ST, EQUIP_PARAM_GOODS_ST, EQUIP_PARAM_WEAPON_ST};
+use crate::param::{EQUIP_PARAM_GEM_ST, EQUIP_PARAM_GOODS_ST, EQUIP_PARAM_WEAPON_ST, EquipParam};
+use crate::{
+    cs::{CSRandXorshift, OptionalItemId},
+    dlut::DLFixedVector,
+    rva,
+};
+use shared::{OwnedPtr, Program, Subclass, Superclass};
 
 #[repr(C)]
 #[shared::singleton("CSGaitem")]
@@ -217,12 +221,21 @@ pub struct GaitemLookupResult {
 
 impl GaitemLookupResult {
     // Retrieves a valid CSGaitemIns from a GaitemHandle if it matches item_category.
-    fn get_gaitem_ins_by_category(&self, handle: &GaitemHandle, item_category: ItemCategory) -> Option<&CSGaitemIns> {
+    fn get_gaitem_ins_by_category(
+        &self,
+        handle: &GaitemHandle,
+        item_category: ItemCategory,
+    ) -> Option<&CSGaitemIns> {
         let rva = Program::current()
             .rva_to_va(rva::get().gaitem_lookup_result_get_gaitem_ins_by_category)
             .unwrap();
 
-        let call = unsafe { transmute::<u64, fn(&GaitemLookupResult, *const GaitemHandle, ItemCategory) -> Option<&CSGaitemIns>>(rva) };
+        let call = unsafe {
+            transmute::<
+                u64,
+                fn(&GaitemLookupResult, *const GaitemHandle, ItemCategory) -> Option<&CSGaitemIns>,
+            >(rva)
+        };
         call(self, handle, item_category)
     }
 
@@ -238,7 +251,10 @@ impl GaitemLookupResult {
 }
 
 #[repr(C)]
-pub struct EquipParamLookupResult<T> where T: EquipParam {
+pub struct EquipParamLookupResult<T>
+where
+    T: EquipParam,
+{
     pub param_id: i32,
     _pad: [u8; 4],
     pub param_row: Option<NonNull<T>>,

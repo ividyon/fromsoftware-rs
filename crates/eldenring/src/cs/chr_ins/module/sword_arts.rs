@@ -1,14 +1,14 @@
-use crate::Vector;
 use crate::cs::{CSChrModelParamModifierModuleEntry, ChrIns};
 use crate::param::SWORD_ARTS_PARAM_ST;
 use std::ptr::NonNull;
+use crate::DLVector;
 
 #[repr(C)]
 /// Source of name: RTTI
 pub struct CSChrSwordArtsModule {
     vftable: usize,
     pub owner: NonNull<ChrIns>,
-    pub modifiers: Vector<CSChrModelParamModifierModuleEntry>,
+    pub modifiers: DLVector<CSChrModelParamModifierModuleEntry>,
 }
 
 #[repr(C)]

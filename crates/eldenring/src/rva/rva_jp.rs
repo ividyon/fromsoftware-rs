@@ -78,6 +78,7 @@ pub const RVAS: RvaBundle = RvaBundle {
     fd4res_cap_vmt: 0x3293678,
     fd4res_rep_vmt: 0x3295e30,
     fd4task_base_vmt: 0x3293a28,
+    field_area_ptr: 0x3d691d8,
     gaitem_lookup_result_get_gaitem_ins_by_category: 0x6727e0,
     gaitem_get_swordarts_param_id_for_weapon: 0x674060,
     game_data_man: 0x3d5df38,

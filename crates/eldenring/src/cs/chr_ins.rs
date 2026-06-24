@@ -713,7 +713,7 @@ pub struct ChrCtrlModifierData {
     unk18: u8,
     unk19: u8,
     // _pad1a: [u8; 0x2],
-    unk1cflags: u32,
+    pub unk1cflags: ChrCtrl1cFlags,
     unk20: [u8; 0x4],
     /// Set by TAE Event 236 RootMotionReduction
     pub root_motion_reduction: f32,
@@ -737,6 +737,13 @@ pub enum ChrMovementLimit {
     /// Set by TAE Event 0 ChrActionFlag (action 89 DISABLE_ALL_MOVEMENT)
     /// Disables all movement.
     DisableAll = 3,
+}
+
+bitfield! {
+    #[derive(Clone, Copy, PartialEq, Eq, Hash)]
+    pub struct ChrCtrl1cFlags(u32);
+    impl Debug;
+    pub is_dead, set_is_dead:   1;
 }
 
 bitfield! {
@@ -793,6 +800,8 @@ bitfield! {
     pub disable_map_collision, set_disable_map_collision:                             2;
     /// Disables map collision 2
     disable_map_collision_2, set_disable_map_collision_2:                             3;
+    /// ChangeCharacterDisableState in EMEVD
+    pub unk_disable, set_unk_disable:                                                 4;
     /// Set by TAE Event 0 ChrActionFlag (action 50 DISABLE_CHARACTER_CAPSULE_COLLISION)
     pub disable_character_capsule_collision, set_disable_character_capsule_collision: 17;
     /// Set by TAE Event 0 ChrActionFlag (action 44 DISABLE_OBJECT_COLLISION)
